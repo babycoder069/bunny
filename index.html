@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BUNNY MAX PLAN - Premium Plans</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f4f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .plan-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 1000px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .plan-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    .plan-card {
+      background: linear-gradient(to bottom right, #ffffff, #f8fbff);
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      padding: 30px 20px;
+      width: 100%;
+      max-width: 300px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #e3e9f0;
+      text-align: center;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .plan-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #2c7be5;
+      margin-bottom: 10px;
+    }
+
+    .plan-price {
+      font-size: 26px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 20px;
+    }
+
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 25px;
+      text-align: left;
+    }
+
+    .plan-features li {
+      color: #555;
+      margin-bottom: 10px;
+      font-size: 15px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .plan-features li::before {
+      content: '✓';
+      color: #2c7be5;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+
+    .purchase-btn {
+      background: #2c7be5;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .purchase-btn:hover {
+      background: #1a68d1;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(44, 123, 229, 0.25);
+    }
+
+    .payment-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .payment-content {
+      background: white;
+      border-radius: 12px;
+      padding: 30px 20px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .qr-code-container {
+      margin: 20px 0;
+    }
+
+    .qr-code-container img {
+      max-width: 200px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .manual-input input {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .submit-btn {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #2c7be5;
+      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #1a68d1;
+      transform: translateY(-2px);
+    }
+
+    #toast {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4caf50;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      z-index: 1001;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+  <div class="container mx-auto max-w-6xl">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-800 mb-2">BUNNY MAX PLAN  Premium Plans</h1>
+      <p class="text-lg text-gray-600 mb-4">Choose the perfect plan for your needs</p>
+      </div>
+    </div>
+  <div class="container">
+    <div class="plan-container">
+      <!-- Weekly Plan -->
+      <div class="plan-card">
+        <div class="plan-title">WEEKLY</div>
+        <div class="plan-price">₹188/wk</div>
+        <ul class="plan-features">
+          <li> Predictions /08 Day</li>
+          <li>30% Refund</li>
+          <li>Basic Features</li>
+          <li>Customer Support</li>
+        </ul>
+        <button class="purchase-btn" onclick="showPayment('Weekly', '₹188/wk')">PURCHASE NOW</button>
+      </div>
+
+      <!-- Monthly Plan -->
+      <div class="plan-card">
+        <div class="plan-title">MONTHLY</div>
+        <div class="plan-price">₹499/mo</div>
+        <ul class="plan-features">
+          <li>Predictions /28 Day</li>
+          <li>40% Refund</li>
+          <li>Standard Features</li>
+          <li>Customer Support</li>
+        </ul>
+        <button class="purchase-btn" onclick="showPayment('Monthly', '₹499/mo')">PURCHASE NOW</button>
+      </div>
+
+      <!-- 3-Month Plan -->
+      <div class="plan-card">
+        <div class="plan-title">2-MONTH</div>
+        <div class="plan-price">₹899/2mo</div>
+        <ul class="plan-features">
+          <li>Predictions /55 Day</li>
+          <li>50% Refund</li>
+          <li>Pro Features</li>
+          <li>Customer Support</li>
+        </ul>
+        <button class="purchase-btn" onclick="showPayment('2-Month', '₹899/2mo')">PURCHASE NOW</button>
+      </div>
+
+      <!-- 1-Year Plan -->
+      <div class="plan-card">
+        <div class="plan-title">1-YEAR</div>
+        <div class="plan-price">₹1799/year</div>
+        <ul class="plan-features">
+          <li>Predictions /365 Day</li>
+          <li>75% Refund</li>
+          <li>All Pro Features</li>
+          <li>Customer Support</li>
+        </ul>
+        <button class="purchase-btn" onclick="showPayment('1-Year', '₹1799/year')">PURCHASE NOW</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="payment-modal" id="paymentModal">
+    <div class="payment-content">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <h2 style="color: #2c7be5;">Selected Plan: <span id="selectedPlan">Weekly</span></h2>
+      <div style="color: #2c7be5; font-size: 18px;" id="planPrice">₹188/wk</div>
+      <div class="qr-code-container">
+        <img src="https://i.ibb.co/6RSfvHH7/Picsart-25-08-22-10-32-05-679.png" alt="QR Code">
+      </div>
+      <p style="color: #555;">Scan this QR code to pay</p>
+      <div class="manual-input">
+        <input type="text" id="manualUTR" placeholder="Enter 12-digit UTR number" maxlength="12" />
+      </div>
+      <button class="submit-btn" onclick="submitPayment()">SUBMIT</button>
+    </div>
+  </div>
+
+  <div id="toast">Payment verified! Opening Telegram...</div>
+
+  <script>
+    let currentPlan = '';
+    let currentPrice = '';
+
+    function showPayment(plan, price) {
+      currentPlan = plan;
+      currentPrice = price;
+      document.getElementById('selectedPlan').textContent = plan;
+      document.getElementById('planPrice').textContent = price;
+      document.getElementById('paymentModal').style.display = 'flex';
+      document.getElementById('manualUTR').value = '';
+    }
+
+    function closeModal() {
+      document.getElementById('paymentModal').style.display = 'none';
+    }
+
+    function submitPayment() {
+      const utr = document.getElementById('manualUTR').value.trim();
+      if (!utr || utr.length !== 12 || isNaN(utr)) {
+        alert('Please enter a valid 12-digit UTR number');
+        return;
+      }
+      const message = `Hello, BUNNY,\nPayment for ${currentPlan} (${currentPrice}) completed!\nUTR: ${utr}\nPlease verify.`;
+      window.open(`https://t.me/bunnyownerr?text=${encodeURIComponent(message)}`, '_blank');
+
+      const toast = document.getElementById('toast');
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+        closeModal();
+      }, 3000);
+    }
+
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('paymentModal')) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
